@@ -3,10 +3,28 @@ import className from 'classnames';
 import { useState,useEffect} from 'react';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import emailjs from 'emailjs-com';
 
 
 export default function Mail() {
+  emailjs.init('YOUR_USER_ID');
+  const [isSubmit, setIsSubmit] = useState(false);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    emailjs.sendForm('service_os4v5hr',"template_0g5izxn", e.target, 'tAjio6JZShSzTTJ0W')
+    .then((result) => {
+      toast.success("Appointment booked", { position: "bottom-right"});
+      setFormValues(initialValues)
+      setIsSubmit(true);
+    }, (error) => {
+      console.log('Error sending email:', error.text);
+    })
+
+   
+}
+
     const InputClasses = className(' w-[250px]  lg:w-[450px] h-[50px] py-4 pl-4 mb-1.5 rounded-lg border-zinc-800 border-[1px] text-black focus:placeholder-top',{});
 
     const currentTime = new Date().toLocaleTimeString('en-US', { hour12: false });
@@ -19,13 +37,13 @@ export default function Mail() {
       }
       return time;
     }; 
-
+    
     const today = new Date().toISOString().split('T')[0];
     
    const initialValues= {username:"",email:"",subject:"", message:"",time:"",date:""};
-    const [formValues, setFormValues] = useState(initialValues);
+   const [formValues, setFormValues] = useState(initialValues);
     // const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+   
   
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -38,17 +56,7 @@ export default function Mail() {
     setFormValues({ ...formValues, [name]: newValue });
     };
   
-    const handleSubmit = (e) => {
-      toast.success("Appointment booked", { position: "bottom-right"})
-      e.preventDefault();
-      setFormValues(initialValues)
-
-
-      //setFormErrors(validate(formValues));
-      setIsSubmit(true);
-       ;
-    };
-   
+    
   
     // const validate = (values) => {
     //   const errors = {};
