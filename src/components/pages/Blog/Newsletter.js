@@ -3,6 +3,8 @@ import Nav from './../Blog/Nav';
 import Footer from '../../Footer';
 import { useEffect,useState } from 'react';
 import './Blog.css';
+import emailjs from 'emailjs-com';
+
 
 export default function Newsletter() {
   //submission
@@ -17,8 +19,16 @@ export default function Newsletter() {
   
   const handleSubmit = (e) => {
     setIsInput(!isInput);
+     
       e.preventDefault();
-    
+      emailjs.sendForm('service_t1b2hvl',"template_0g5izxn", e.target, 'tAjio6JZShSzTTJ0W')
+      .then((result) => {
+        setShowInput(true);
+       
+       
+      }, (error) => {
+        console.log('Error sending email:', error.text);
+      })
      
     };
 
