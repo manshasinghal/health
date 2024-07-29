@@ -7,7 +7,6 @@ import emailjs from 'emailjs-com';
 
 
 export default function Mail() {
-  emailjs.init('YOUR_USER_ID');
   const [isSubmit, setIsSubmit] = useState(false);
 
 
